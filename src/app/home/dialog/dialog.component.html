@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-between p-3">
+    <div class="d-flex align-items-center text-align-center">
+        <h3 style="margin: 0px;">
+            {{title}} <span>{{isModel ? 'Yazıyı Güncelle' : 'Yazıyı Gör'}}</span>
+        </h3>
+    </div>
+    <button (click)="close()" style="font-size: 24px;" color="primary" mat-button>
+        x
+    </button>
+</div>
+
+<mat-divider class="mb-2"></mat-divider>
+
+<div class="p-3" *ngIf="!isModel">
+    <div class="row">
+        <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
+            <img class="w-100 img-fluid" src="assets/images/image{{imageUrl}}.jpg">
+        </div>
+        <div class="col-md-6" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h2 class="mt-1 text-align-center">{{title}}</h2>
+            <p class="mt-1">{{content}}</p>
+        </div>
+    </div>
+    <div *ngFor="let comment of commentData" class="row mt-5 bg-dark p-3 text-white">
+        <div style="display: flex; justify-content: center; align-items: center;" class="col-md-2">
+            <img class="img-fluid" style="width: 120px; height: 120px; border-radius: 50%;" src="assets/images/profile/profile{{comment.userId}}.jpg">
+        </div>
+        <div class="col-md-10">
+            <h3 style="font-size: large;">{{comment.name}}</h3>
+            <p>{{comment.body}}</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="p-3" *ngIf="isModel">
+    <form style="min-width: 350px;" [formGroup]="form">
+        <div class="container">
+            <div class="row">
+                <mat-form-field>
+                    <mat-label> Blog Başlığı </mat-label>
+                    <input matInput formControlName="title" type="text">
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field>
+                    <mat-label> Blog İçeriği </mat-label>
+                    <textarea matInput formControlName="content" cols="40" rows="10"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <button (click)="onSubmit()" [disabled]="!form.valid" mat-raised-button color="primary"> Güncelle </button>
+        </div>
+    </form>
+</div>
